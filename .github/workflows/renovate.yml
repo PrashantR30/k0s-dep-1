@@ -1,10 +1,16 @@
-name: Renovate Embedded Bins
+name: Renovate Test
 
 on:
-  push:
-    branches:
-      - main  # Triggers on every push to the main branch
-  workflow_dispatch:  # Allows manual triggering
+  workflow_dispatch:
+    inputs:
+      dryRun:
+        description: 'Run in dry-run mode'
+        required: true
+        default: 'true'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
 
 jobs:
   renovate:
@@ -13,7 +19,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Required for proper version checking
+          fetch-depth: 0
         
       - name: Self-hosted Renovate
         uses: renovatebot/github-action@v40.1.5
@@ -26,3 +32,6 @@ jobs:
           RENOVATE_BINARY_SOURCE: 'local'
           LOG_FORMAT: 'json'
           RENOVATE_PLATFORM_COMMIT: true
+          # Test specific settings
+          RENOVATE_DRY_RUN: ${{ github.event.inputs.dryRun }}
+          RENOVATE_FORCE: true

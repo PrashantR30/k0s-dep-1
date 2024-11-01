@@ -4,15 +4,26 @@
     "config:recommended",
     "config:base"
   ],
-  "automerge": false,
+  "enabledManagers": ["regex"],
+  "regexManagers": [
+    {
+      "fileMatch": ["^embedded-bins/versions\\.txt$"],
+      "matchStrings": [
+        "(?<depName>[^=]+)_VERSION=(?<currentValue>.*?)\\s"
+      ],
+      "datasourceTemplate": "github-releases",
+      "versioningTemplate": "semver"
+    }
+  ],
   "packageRules": [
     {
+      "matchDatasources": ["github-releases"],
       "groupName": "embedded dependencies",
       "updateTypes": ["minor", "patch"],
-      "automerge": false,
-      "extractVersion": "gzipped"
+      "automerge": false
     }
   ],
   "dependencyDashboard": true,
-  "labels": ["dependency update"]
+  "labels": ["dependency update"],
+  "dryRun": false
 }
