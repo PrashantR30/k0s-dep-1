@@ -1,12 +1,14 @@
 name: Renovate Embedded Bins
+
 on:
   push:
     branches:
       - main  # Triggers on every push to the main branch
-  workflow_dispatch:
-  push:
     paths:
-      - 'embedded-bins/**'
+      - 'embedded-bins/**'  # Only trigger when embedded-bins directory changes
+  workflow_dispatch:  # Allows manual triggering
+  schedule:
+    - cron: '0 3 * * *'  # Run daily at 3 AM UTC to catch any missed updates
 
 jobs:
   renovate:
@@ -25,7 +27,6 @@ jobs:
           LOG_LEVEL: 'debug'
           RENOVATE_CONFIG_FILE: 'embedded-bins/.renovate.json'
           RENOVATE_REPOSITORIES: ${{ github.repository }}
-          # Enable binary file support
           RENOVATE_BINARY_SOURCE: 'local'
           LOG_FORMAT: 'json'
           RENOVATE_PLATFORM_COMMIT: true
