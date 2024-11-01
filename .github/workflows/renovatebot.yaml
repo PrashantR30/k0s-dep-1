@@ -47,4 +47,3 @@ jobs:
           LOG_LEVEL: debug
         with:
           configurationFile: ${{ matrix.configurationFile }}
-         
