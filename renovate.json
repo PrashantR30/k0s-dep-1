@@ -6,7 +6,7 @@
   ],
   "automerge": false,
   "baseBranch": "dependency_check",
-  "schedule": ["at 17:15 on every weekday"],
+  "schedule": ["at 18:05 on every weekday"],
   "timezone": "Etc/GMT-4",
   "packageRules": [
     {
