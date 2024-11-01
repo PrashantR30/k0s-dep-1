@@ -4,10 +4,7 @@ on:
   push:
     branches:
       - main  # Triggers on every push to the main branch
-    paths:
-      - 'embedded-bins/**'  # Only trigger when embedded-bins directory changes
   workflow_dispatch:  # Allows manual triggering
-
 
 jobs:
   renovate:
