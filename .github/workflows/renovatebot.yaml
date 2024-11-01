@@ -1,0 +1,50 @@
+name: Update dependencies
+concurrency: update-dependencies
+
+on:
+  schedule:
+    # Every day at midnight
+    - cron: "05 15 * * *"
+  workflow_dispatch:
+  issue_comment:
+    types:
+      - edited
+  pull_request:
+    types:
+      - edited
+
+
+jobs:
+  update-dependencies:
+    runs-on: ubuntu-latest
+    name: Update dependencies
+    strategy:
+      fail-fast: false
+      matrix:
+        configurationFile: [renovate/renovate.json]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install project
+        run: yarn install --frozen-lockfile
+      - name: Build
+        run: yarn build
+
+      - name: Configure renovate token
+        run: |
+          if [[ "${RENOVATE_TOKEN}" != ""  ]]; then
+            echo "RENOVATE_TOKEN=${RENOVATE_TOKEN}" >> $GITHUB_ENV
+          else
+            echo "RENOVATE_TOKEN=${GITHUB_TOKEN}" >> $GITHUB_ENV
+          fi          
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RENOVATE_TOKEN: ${{ secrets.RENOVATE_TOKEN }}
+
+      - name: Renovate test
+        uses: ./
+        env:
+          LOG_LEVEL: debug
+        with:
+          configurationFile: ${{ matrix.configurationFile }}
+         
