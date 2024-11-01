@@ -4,12 +4,12 @@
     "config:recommended",
     "config:base"
   ],
-  "enabledManagers": ["regex"],
+  "automerge": false,
   "regexManagers": [
     {
-      "fileMatch": ["^embedded-bins/versions\\.txt$"],
+      "fileMatch": ["^embedded-bins/.*"],
       "matchStrings": [
-        "(?<depName>[^=]+)_VERSION=(?<currentValue>.*?)\\s"
+        "(?<depName>[^=]+)_VERSION\\s*=\\s*(?<currentValue>[^\\s]+)"
       ],
       "datasourceTemplate": "github-releases",
       "versioningTemplate": "semver"
@@ -17,13 +17,12 @@
   ],
   "packageRules": [
     {
-      "matchDatasources": ["github-releases"],
+      "matchFileNames": ["embedded-bins/*"],
       "groupName": "embedded dependencies",
-      "updateTypes": ["minor", "patch"],
+      "matchUpdateTypes": ["minor", "patch"],
       "automerge": false
     }
   ],
   "dependencyDashboard": true,
-  "labels": ["dependency update"],
-  "dryRun": false
+  "labels": ["dependency update"]
 }
