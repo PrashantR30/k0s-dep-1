@@ -5,22 +5,12 @@
     "config:base"
   ],
   "automerge": false,
-  "regexManagers": [
-    {
-      "fileMatch": ["^embedded-bins/.*"],
-      "matchStrings": [
-        "(?<depName>[^=]+)_VERSION\\s*=\\s*(?<currentValue>[^\\s]+)"
-      ],
-      "datasourceTemplate": "github-releases",
-      "versioningTemplate": "semver"
-    }
-  ],
   "packageRules": [
     {
-      "matchFileNames": ["embedded-bins/*"],
       "groupName": "embedded dependencies",
-      "matchUpdateTypes": ["minor", "patch"],
-      "automerge": false
+      "updateTypes": ["minor", "patch"],
+      "automerge": false,
+      "extractVersion": "gzipped"
     }
   ],
   "dependencyDashboard": true,
