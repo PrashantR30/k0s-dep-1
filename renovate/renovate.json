@@ -1,0 +1,19 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    "config:base"
+  ],
+  "automerge": false,
+  "packageRules": [
+    {
+      "matchPaths": ["embedded-bins/*"],
+      "groupName": "embedded dependencies",
+      "updateTypes": ["minor", "patch"],
+      "automerge": false,
+      "extractVersion": "gzipped"
+    }
+  ],
+  "dependencyDashboard": true,
+  "labels": ["dependency update"]
+}
