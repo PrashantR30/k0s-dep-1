@@ -8,6 +8,7 @@ on:
       - 'embedded-bins/**'  # Only trigger when embedded-bins directory changes
   workflow_dispatch:  # Allows manual triggering
 
+
 jobs:
   renovate:
     runs-on: ubuntu-latest
