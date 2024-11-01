@@ -7,10 +7,7 @@ on:
     paths:
       - 'embedded-bins/**'  # Only trigger when embedded-bins directory changes
   workflow_dispatch:  # Allows manual triggering
-  schedule:
-    - cron: '0 3 * * *'  # Run daily at 3 AM UTC to catch any missed updates
 
-jobs:
   renovate:
     runs-on: ubuntu-latest
     steps:
